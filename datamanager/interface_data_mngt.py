@@ -11,6 +11,10 @@ class DataManagerInterface(ABC):
         pass
 
     @abstractmethod
+    def get_all_movies(self):
+        pass
+
+    @abstractmethod
     def add_user(self, user):
         pass
 

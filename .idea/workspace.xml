@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58356c40-181c-4c04-b1ca-dc501fa81738" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/datamanager/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datamanager/interface_data_mngt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datamanager/movie_sql_db.sqlite" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datamanager/sqlite_data_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datamanager/interface_data_mngt.py" beforeDir="false" afterPath="$PROJECT_DIR$/datamanager/interface_data_mngt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datamanager/movie_sql_db.sqbpro" beforeDir="false" afterPath="$PROJECT_DIR$/datamanager/movie_sql_db.sqbpro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datamanager/movie_sql_db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/datamanager/movie_sql_db.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datamanager/sqlite_data_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/datamanager/sqlite_data_manager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +19,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2tOFYpWXuiubiI9WqhIF1mwDsC7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -32,12 +30,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.sqlite_data_manager.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/datamanager" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>

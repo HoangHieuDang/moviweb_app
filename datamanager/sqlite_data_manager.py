@@ -1,4 +1,4 @@
-from interface_data_mngt import DataManagerInterface
+from datamanager.interface_data_mngt import DataManagerInterface
 from sqlalchemy import URL, create_engine, text
 
 
@@ -16,13 +16,14 @@ class SQLiteDataManager(DataManagerInterface):
     def get_all_users(self):
         """
         get all users from the table users of the sqlite database
-        :return: RETURN a LIST of all users
+        :return: RETURN a LIST of all users in this format:
+        [{"name":"John", "id":1}{...}]
         """
         with self._engine.connect() as connection:
             result = connection.execute(text("SELECT * FROM users"))
             users_list = []
             for row in result:
-                users_list.append(row.name)
+                users_list.append({"name": row.name, "id": row.id})
             return users_list
 
     def get_user_movies(self, user_id):
@@ -40,17 +41,19 @@ class SQLiteDataManager(DataManagerInterface):
                     "rating":8.0,
                     "director":"Michale Bay"}
         }
-        + empty dict {} if fail
+        + empty dict {} if fail or no match
         """
-        query_get_movies_from_user_id = text("""SELECT * FROM movies WHERE movies.user_id = :user_id""")
+        query_get_movies_from_user_id = text(
+            """SELECT movies.name, movies.year, movies.rating, movies.director FROM user_favorites JOIN movies ON movies.id = user_favorites.movie_id WHERE user_favorites.user_id = :user_id""")
         if isinstance(user_id, int):
             params = {"user_id": user_id}
             with self._engine.connect() as connection:
+                # The result will be a list of all movie_ids of the given user_id
                 result = connection.execute(query_get_movies_from_user_id, params)
-                #print(f"Query result: {list(result)}")
                 movies_dict = dict()
                 for row in result:
-                    movies_dict[row.name] = {"year":f"{row.year}","rating":f"{row.rating}", "director":f"{row.director}", "user_id":f"{row.user_id}"}
+                    movies_dict[row.name] = {"year": f"{row.year}", "rating": f"{row.rating}",
+                                             "director": f"{row.director}"}
                 return movies_dict
         else:
             print("invalid user_id!")
@@ -74,7 +77,8 @@ class SQLiteDataManager(DataManagerInterface):
             result = connection.execute(text("SELECT * FROM movies"))
             movies_dict = dict()
             for row in result:
-                movies_dict[row.name] = {"year":f"{row.year}","rating":f"{row.rating}", "director":f"{row.director}", "user_id":f"{row.user_id}"}
+                movies_dict[row.name] = {"year": f"{row.year}", "rating": f"{row.rating}",
+                                         "director": f"{row.director}"}
             return movies_dict
 
     def add_user(self, user):
@@ -84,19 +88,22 @@ class SQLiteDataManager(DataManagerInterface):
         False when add operation fails
         True when add operation succeeds
         """
-        # Check if the user is already in the sqlite database
+        # SQL Check if the user is already in the sqlite database
+        # Since the user's name in the table users is set to UNIQUE in SQL
         # Only add the new username if the name hasn't been taken yet
-        if user in self.get_all_users():
-            print("user name already taken!")
-            return False
-        else:
+        try:
             query = text("INSERT INTO users (name) VALUES (:user)")
             params = {"user": user}
-            #add user to the database using parameterised query
+            # add user to the database using parameterised query
             with self._engine.connect() as connection:
-                result = connection.execute(query, params)
+                connection.execute(query, params)
                 connection.commit()
-                return True
+        except Exception as err:
+            print("Can not add user into database:" + str(err))
+            return False
+        else:
+            print("User added successfully")
+            return True
 
     def add_movie(self, movie):
         """
@@ -106,15 +113,16 @@ class SQLiteDataManager(DataManagerInterface):
         False when the add operation fails
         True when the add operation succeeds
         """
-        query_add_movie = text("""INSERT INTO movies (name, year, rating, director) VALUES(:name, :year, :rating, :director)""")
+        query_add_movie = text(
+            """INSERT INTO movies (name, year, rating, director) VALUES(:name, :year, :rating, :director)""")
         query_check_movie_exist = text("""SELECT * FROM movies WHERE name = :name AND director = :director LIMIT 1""")
         if isinstance(movie, dict) and movie:
             try:
                 movie_title_key = list(movie.keys())[0]
                 params = {
-                    "name":movie_title_key,
-                    "year":movie[movie_title_key]['year'],
-                    "rating":movie[movie_title_key]['rating'],
+                    "name": movie_title_key,
+                    "year": movie[movie_title_key]['year'],
+                    "rating": movie[movie_title_key]['rating'],
                     "director": movie[movie_title_key]['director']
                 }
             except Exception as err:
@@ -157,7 +165,7 @@ class SQLiteDataManager(DataManagerInterface):
         query_check_movie_exist = text(
             """SELECT * FROM movies WHERE name = :name AND director = :director LIMIT 1""")
 
-        #check if the input movie was a dict and not empty
+        # check if the input movie was a dict and not empty
         if isinstance(movie, dict) and movie:
             try:
                 movie_title_key = list(movie.keys())[0]
@@ -176,7 +184,7 @@ class SQLiteDataManager(DataManagerInterface):
                     search_result = connection.execute(query_check_movie_exist, params).fetchone()
                     # if the search_result is not empty, update the movie using the parameterised sql query
                     if search_result is not None:
-                        #with self._engine.connect() as connection:
+                        # with self._engine.connect() as connection:
                         connection.execute(query_update_movie, params)
                         connection.commit()
                         print("Movie's info updated successfully!")
@@ -208,7 +216,7 @@ class SQLiteDataManager(DataManagerInterface):
             with self._engine.connect() as connection:
                 search_result = connection.execute(query_search_user, params).fetchone()
                 if search_result is not None:
-                    #with self._engine.connect() as connection:
+                    # with self._engine.connect() as connection:
                     connection.execute(query_delete_user, params)
                     connection.commit()
                     print("The user was deleted from the database")
@@ -216,7 +224,6 @@ class SQLiteDataManager(DataManagerInterface):
                 else:
                     print("The user doesn't exist in the database")
                     return False
-
 
     def delete_movie(self, movie_id):
         """
@@ -237,7 +244,7 @@ class SQLiteDataManager(DataManagerInterface):
             with self._engine.connect() as connection:
                 search_result = connection.execute(query_search_movie, params).fetchone()
                 if search_result is not None:
-                    #with self._engine.connect() as connection:
+                    # with self._engine.connect() as connection:
                     connection.execute(query_delete_movie, params)
                     connection.commit()
                     print("The movie was deleted from the database")
@@ -246,9 +253,10 @@ class SQLiteDataManager(DataManagerInterface):
                     print("The movie doesn't exist in the database")
                     return False
 
-
-sqlite_data_obj = SQLiteDataManager("movie_sql_db.sqlite")
-print(sqlite_data_obj.get_all_users())
-print(sqlite_data_obj.get_all_movies())
-print(sqlite_data_obj.get_all_users())
-print(sqlite_data_obj.get_user_movies(2))
+"""
+data_manager_obj = SQLiteDataManager('movie_sql_db.sqlite')
+print(data_manager_obj.get_all_users())
+print(data_manager_obj.get_user_movies(2))
+print(data_manager_obj.get_all_movies())
+data_manager_obj.add_user("Laura Smith")
+"""

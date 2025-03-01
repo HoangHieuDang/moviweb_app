@@ -5,17 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58356c40-181c-4c04-b1ca-dc501fa81738" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/add_movie_to_user.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/add_user.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/error_msg.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/update_movie.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/404.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datamanager/interface_data_mngt.py" beforeDir="false" afterPath="$PROJECT_DIR$/datamanager/interface_data_mngt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/datamanager/movie_sql_db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/datamanager/movie_sql_db.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datamanager/sqlite_data_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/datamanager/sqlite_data_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movie_sql_db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_movie_to_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_movie_to_user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/error_msg.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/error_msg.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/update_movie.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/update_movie.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/user_movies.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_movies.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/users.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users.html" afterDir="false" />
     </list>
@@ -54,6 +53,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static" />
       <recent name="$PROJECT_DIR$/datamanager" />
       <recent name="$PROJECT_DIR$/data" />
     </key>

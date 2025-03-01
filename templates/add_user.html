@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User - MovieWeb App</title>
+</head>
+<body>
+    <h1>Add a New User</h1>
+
+    <form action="{{ url_for('add_user') }}" method="POST">
+        <label for="username">User Name:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit">Add User</button>
+    </form>
+
+    <a href="{{ url_for('list_users') }}">Back to Users List</a>
+</body>
+</html>

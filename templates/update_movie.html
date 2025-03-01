@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Movie - MovieWeb App</title>
+</head>
+<body>
+    <h1>Update Movie for {{ user['name'] }}</h1>
+    {% for title, details in movie.items() %}
+        <form action="{{ url_for('update_movie', user_id=user['id'], movie_id=movie[title]['id']) }}" method="POST">
+            <label for="movie_name">Movie Name:</label>
+            <input type="text" id="movie_name" name="movie_name" value="{{ title }}" required>
+
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" value="{{ movie[title]['year'] }}" required>
+
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" step="0.1" min="0" max="10" value="{{ movie[title]['rating'] }}" required>
+
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director" value="{{ movie[title]['director'] }}" required>
+
+            <input type="hidden" name="movie_id" value="{{ movie[title]['id'] }}">
+
+            <button type="submit">Update Movie</button>
+            <a href="{{ url_for('get_user_movies', user_id=user['id']) }}">
+                <button type="button">Cancel</button>
+            </a>
+        </form>
+    {% endfor %}
+</body>
+</html>

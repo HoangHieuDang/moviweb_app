@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Movie - MovieWeb App</title>
+</head>
+<body>
+    <h1>Add a Movie to {{ user['name'] }}'s Favorite List</h1>
+
+    {% if existing_movie %}
+        <h2>Did you mean this movie?</h2>
+        {% for movie_name, details in existing_movie.items() %}
+            <p><strong>{{ movie_name }}</strong> ({{ details.year }})</p>
+            <p>Directed by: {{ details.director }}</p>
+            <p>Rating: {{ details.rating }}</p>
+        {% endfor %}
+
+        <form action="{{ url_for('add_movie_to_user', user_id=user['id']) }}" method="POST">
+            <input type="hidden" name="use_existing_movie" value="true">
+            {% for movie_name, details in existing_movie.items() %}
+                <input type="hidden" name="movie_id" value="{{ details.id }}">
+            {% endfor %}
+            <button type="submit">Yes, use this movie</button>
+        </form>
+
+        <form action="{{ url_for('add_movie_to_user', user_id=user['id']) }}" method="POST">
+            <input type="hidden" name="use_existing_movie" value="false">
+            <button type="submit">No, add a new movie</button>
+        </form>
+    {% else %}
+        <form action="{{ url_for('add_movie_to_user', user_id=user['id']) }}" method="POST">
+            <label for="movie_name">Movie Name:</label>
+            <input type="text" id="movie_name" name="movie_name" required>
+
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director" required>
+
+            <button type="submit">Add Movie</button>
+        </form>
+    {% endif %}
+
+    <a href="{{ url_for('get_user_movies', user_id=user['id']) }}">Back to Favorite Movies</a>
+</body>
+</html>

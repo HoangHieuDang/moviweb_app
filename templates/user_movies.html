@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Movies - MovieWeb App</title>
 </head>
 <body>
+    <h1>{{ user['name'] }}'s Favorite Movies</h1>
 
+    <ul>
+        {% for movie, details in movies.items() %}
+            <li>
+                <strong>{{ movie }}</strong><br>
+                Director: {{ details.director }}<br>
+                Year: {{ details.year }}<br>
+                Rating: {{ details.rating }}<br>
+                <form action="{{ url_for('delete_movie', user_id=user['id'], movie_id=details.id) }}" method="GET" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+                <form action="{{ url_for('update_movie', user_id=user['id'], movie_id=details.id) }}" method="GET" style="display:inline;">
+                    <button type="submit">Update</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="{{ url_for('add_movie_to_user', user_id=user['id']) }}" method="GET" style="display:block;">
+                    <button type="submit">Add movie to {{ user['name'] }}'s favorite list</button>
+                </form>
+    <a href="{{ url_for('list_users') }}">Back to Users List</a>
 </body>
 </html>

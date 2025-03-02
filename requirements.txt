@@ -1,0 +1,7 @@
+sqlalchemy
+flask
+flask_cors
+werkzeug
+python-dotenv
+requests
+

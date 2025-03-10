@@ -78,11 +78,12 @@ def add_movie_to_user(user_id):
     if request.method == 'POST':
         user = data_manager.get_user_by_id(user_id)
         movie_name = request.form.get('movie_name')
-        director = request.form.get('director')
+        #director = request.form.get('director')
         year = None
         rating = None
         # fetching movie details from OMDB database
-        if movie_name and director:
+
+        if movie_name:
             url_get_movie_by_title_omdb = f"https://www.omdbapi.com/?apikey={OMDB_API_KEY}&t={movie_name}"
             try:
                 response = requests.get(url_get_movie_by_title_omdb, timeout=2.50)
@@ -97,10 +98,11 @@ def add_movie_to_user(user_id):
                     director_omdb = response_json['Director'].lower()
                 # if the input director matches the director from OMDB, get year and rating details
                 # from OMDB to complete the movie info
-                if director.lower() == director_omdb:
+
+                if director_omdb:
                     year = response.json()['Year']
                     rating = response.json()['imdbRating']
-                    print(movie_name, director, year, rating)
+                    print(movie_name, director_omdb, year, rating)
                 else:
                     return render_template("error_msg.html",
                                            error_msg="can not find the movie title from the given director in OMDB database"),404
@@ -110,12 +112,12 @@ def add_movie_to_user(user_id):
         # but with conflicting information (unmatched year or rating)
         use_existing_movie = request.form.get('use_existing_movie')
         existing_movie_id = request.form.get('movie_id')
-        if movie_name and year and rating and director:
+        if movie_name and year and rating and director_omdb:
             input_movie = {
                 f"{movie_name}": {
                     "year": f"{year}",
                     "rating": f"{rating}",
-                    "director": f"{director}"
+                    "director": f"{director_omdb}"
                 }
             }
             # Check if the movie already existed in the sqlite database
@@ -136,7 +138,7 @@ def add_movie_to_user(user_id):
                 print("movies:", movies, type(movies))
                 for movie, details in movies.items():
                     # if the user input movie_name and director match the movie's name and director from the database
-                    if movie_name == movie and director == details['director']:
+                    if movie_name == movie and director_omdb == details['director']:
                         input_movie_id = details['id']
                 # check if input_movie_id receives a meaningful value from the extraction instead of the init value 0
                 if input_movie_id != 0:

@@ -8,8 +8,15 @@
 </head>
 <body>
     <h1>Welcome to MovieWeb App!</h1>
+    <div class="link-div">
     <a href="{{ url_for('list_users') }}">
         <button type="button">Go to user's list</button>
     </a>
+    </div>
+    <div class="link-div">
+    <a href="{{ url_for('add_user') }}" display="inline">
+        <button type="button">Add an user</button>
+    </a>
+    </div>
 </body>
 </html>
